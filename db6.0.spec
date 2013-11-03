@@ -18,7 +18,7 @@ Summary(pl.UTF-8):	Biblioteka C do obsługi baz Berkeley DB
 Name:		db6.0
 Version:	%{ver}.%{patchlevel}
 Release:	1
-License:	BSD-like (see LICENSE)
+License:	AGPL v3
 Group:		Libraries
 #Source0Download: http://www.oracle.com/technetwork/products/berkeleydb/downloads/index.html
 Source0:	http://download.oracle.com/berkeley-db/db-%{ver}.tar.gz
