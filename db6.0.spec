@@ -11,7 +11,7 @@
 
 %define		major		6
 %define		libver		%{major}.0
-%define		ver		%{libver}.30
+%define		ver		%{libver}.35
 %define		patchlevel	0
 Summary:	Berkeley DB database library for C
 Summary(pl.UTF-8):	Biblioteka C do obsługi baz Berkeley DB
@@ -21,8 +21,10 @@ Release:	1
 License:	AGPL v3
 Group:		Libraries
 #Source0Download: http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/downloads/index-082944.html
-Source0:	http://download.oracle.com/berkeley-db/db-%{ver}.tar.gz
-# Source0-md5:	ad28eb86ad3203b5422844db179c585b
+# no longer available without login, use gentoo distfiles URL
+#Source0:	http://download.oracle.com/berkeley-db/db-%{ver}.tar.gz
+Source0:	http://distfiles.gentoo.org/distfiles/db-%{ver}.tar.gz
+# Source0-md5:	c65a4d3e930a116abaaf69edfc697f25
 Patch0:		%{name}-link.patch
 Patch1:		%{name}-sql-features.patch
 URL:		http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/overview/index.html
