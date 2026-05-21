@@ -7,8 +7,6 @@
 %bcond_with	default_db	# use this db as default system db [Th uses DB 5.3]
 %bcond_with	rpm_db		# install library to rootfs for /bin/rpm
 
-%{load:/usr/lib/rpm/macros.d/java}
-
 %define		major		6
 %define		libver		%{major}.0
 %define		ver		%{libver}.35
@@ -17,7 +15,7 @@ Summary:	Berkeley DB database library for C
 Summary(pl.UTF-8):	Biblioteka C do obsługi baz Berkeley DB
 Name:		db6.0
 Version:	%{ver}.%{patchlevel}
-Release:	1
+Release:	2
 License:	AGPL v3
 Group:		Libraries
 #Source0Download: http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/downloads/index-082944.html
@@ -27,6 +25,7 @@ Source0:	http://distfiles.gentoo.org/distfiles/db-%{ver}.tar.gz
 # Source0-md5:	c65a4d3e930a116abaaf69edfc697f25
 Patch0:		%{name}-link.patch
 Patch1:		%{name}-sql-features.patch
+Patch2:		%{name}-tls-null.patch
 URL:		http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/overview/index.html
 BuildRequires:	automake
 %if %{with java}
@@ -374,12 +373,15 @@ poleceń.
 %setup -q -n db-%{ver}
 %patch -P0 -p1
 %patch -P1 -p1
+%patch -P2 -p1
 
 %build
 cp -f /usr/share/automake/config.sub dist
 
 JAVACFLAGS="-source 1.5 -target 1.5"
 export JAVACFLAGS
+
+%define		configuredir	../dist
 
 %if %{with static_libs}
 cp -a build_unix build_unix.static
@@ -388,12 +390,12 @@ cd build_unix.static
 
 CC="%{__cc}"
 CXX="%{__cxx}"
-CFLAGS="%{rpmcflags}"
+CFLAGS="%{rpmcflags} -std=gnu17"
 CXXFLAGS="%{rpmcflags} -fno-implicit-templates"
 LDFLAGS="%{rpmcflags} %{rpmldflags}"
 export CC CXX CFLAGS CXXFLAGS LDFLAGS
 
-../dist/%configure \
+%configure \
 	--disable-shared \
 	--enable-static \
 	--enable-compat185 \
@@ -411,9 +413,12 @@ cd ..
 
 cd build_unix
 
-../dist/%configure \
-	--prefix=%{_prefix} \
-	--libdir=%{_libdir} \
+unset CFLAGS CXXFLAGS LDFLAGS
+%{set_build_flags}
+CFLAGS="$CFLAGS -std=gnu17"
+export CFLAGS
+
+%configure \
 	--enable-shared \
 	--disable-static \
 	--enable-compat185 \

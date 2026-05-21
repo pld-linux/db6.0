@@ -1,0 +1,33 @@
+--- db-6.0.35/dist/aclocal/tls.m4.orig	2026-05-20 23:55:47.106217384 +0200
++++ db-6.0.35/dist/aclocal/tls.m4	2026-05-20 23:55:47.113062014 +0200
+@@ -21,10 +21,10 @@
+               class TLSClass2 {
+               public: static ] $ax_tls_decl_keyword [int tlsvar;
+               };
+-              template<typename T> ] $ax_tls_defn_keyword [ T* TLSClass<T>::tlsvar = NULL;]
++              template<typename T> ] $ax_tls_defn_keyword [ T* TLSClass<T>::tlsvar = 0;]
+               $ax_tls_defn_keyword [int TLSClass2::tlsvar = 1; 
+               static $ax_tls_decl_keyword int x = 0;],
+-              [TLSClass<int>::tlsvar = NULL; TLSClass2::tlsvar = 1;],
++              [TLSClass<int>::tlsvar = 0; TLSClass2::tlsvar = 1;],
+               [ac_cv_tls=modifier ; break])
+       done
+       test "$ac_cv_tls" = none || break
+--- db-6.0.35/dist/configure.orig	2026-05-20 23:55:47.109550718 +0200
++++ db-6.0.35/dist/configure	2026-05-20 23:55:47.116217385 +0200
+@@ -19183,13 +19183,13 @@
+               class TLSClass2 {
+               public: static  $ax_tls_decl_keyword int tlsvar;
+               };
+-              template<typename T>  $ax_tls_defn_keyword  T* TLSClass<T>::tlsvar = NULL;
++              template<typename T>  $ax_tls_defn_keyword  T* TLSClass<T>::tlsvar = 0;
+               $ax_tls_defn_keyword int TLSClass2::tlsvar = 1;
+               static $ax_tls_decl_keyword int x = 0;
+ int
+ main ()
+ {
+-TLSClass<int>::tlsvar = NULL; TLSClass2::tlsvar = 1;
++TLSClass<int>::tlsvar = 0; TLSClass2::tlsvar = 1;
+   ;
+   return 0;
+ }
