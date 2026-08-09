@@ -15,7 +15,7 @@ Summary:	Berkeley DB database library for C
 Summary(pl.UTF-8):	Biblioteka C do obsługi baz Berkeley DB
 Name:		db6.0
 Version:	%{ver}.%{patchlevel}
-Release:	2
+Release:	3
 License:	AGPL v3
 Group:		Libraries
 #Source0Download: http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/downloads/index-082944.html
@@ -448,6 +448,7 @@ install -d $RPM_BUILD_ROOT%{_javadir}
 %if %{with static_libs}
 %{__make} -C build_unix.static library_install \
 	DESTDIR=$RPM_BUILD_ROOT \
+	STRIP=: \
 	docdir=%{_docdir}/db-%{version}-docs \
 	includedir=%{_includedir}
 %endif
@@ -455,6 +456,7 @@ install -d $RPM_BUILD_ROOT%{_javadir}
 %{__make} -C build_unix library_install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	LIB_INSTALL_FILE_LIST="" \
+	STRIP=: \
 	docdir=%{_docdir}/db-%{version}-docs \
 	includedir=%{_includedir}
 
